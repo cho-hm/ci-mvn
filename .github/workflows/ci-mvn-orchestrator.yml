@@ -1,0 +1,53 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2025 Cho-Hyunmin
+name: parser
+on:
+  workflow_call:
+
+jobs:
+  parse:
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    runs-on: ubuntu-latest
+    outputs:
+      TRIGGER_TYPE: ${{ steps.props.outputs.TRIGGER_TYPE }}
+      TRIGGER_BRANCH: ${{ steps.props.outputs.TRIGGER_BRANCH }}
+      GPG_REPO_URL: ${{ steps.props.outputs.GPG_REPO_URL }}
+      GPG_REPO_GPG_PATH: ${{ steps.props.outputs.GPG_REPO_GPG_PATH }}
+      GPG_REPO_ASC_PATH: ${{ steps.props.outputs.GPG_REPO_ASC_PATH }}
+      GPG_REPO_BRANCH: ${{ steps.props.outputs.GPG_REPO_BRANCH }}
+      BUILD_COMMAND: ${{ steps.props.outputs.BUILD_COMMAND }}
+      GHCR_CHECKER: ${{ steps.props.outputs.GHCR_CHECKER }}
+      GHCR_BUILDER: ${{ steps.props.outputs.GHCR_BUILDER }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: '1'
+      - id: props
+        name: set properties
+        run: bash "${GITHUB_WORKSPACE}"/.github/workflows/scripts/parser/property-parser.sh
+
+  dispatch-to-checker:
+    name: dispatch to checker
+    needs: parse
+    uses: yule-test-ci/ci-to-mvn/.github/workflows/ci-mvn-checker.yml@v1
+#    uses: cho-hm/ci-mvn/.github/workflows/ci-mvn-checker.yml@v1
+    with:
+      # checker에서 필요한 프로퍼티들.
+      TRIGGER_TYPE: ${{ needs.parse.outputs.TRIGGER_TYPE }}
+      TRIGGER_BRANCH: ${{ needs.parse.outputs.TRIGGER_BRANCH }}
+      GPG_REPO_URL: ${{ needs.parse.outputs.GPG_REPO_URL }}
+      GPG_REPO_GPG_PATH: ${{ needs.parse.outputs.GPG_REPO_GPG_PATH }}
+      GPG_REPO_ASC_PATH: ${{ needs.parse.outputs.GPG_REPO_ASC_PATH }}
+      GPG_REPO_BRANCH: ${{ needs.parse.outputs.GPG_REPO_BRANCH }}
+    secrets: inherit
+
+  dispatch-to-builder:
+    name: dispatch to builder
+    needs: [ parse, dispatch-to-checker ]
+    if: ${{ needs.dispatch-to-checker.result == 'success' && needs.dispatch-to-checker.outputs.CONTINUE == 'true' }}
+    uses: yule-test-ci/ci-to-mvn/.github/workflows/ci-mvn-publisher.yml@v1
+#    uses: cho-hm/ci-mvn/.github/workflows/ci-mvn-publisher.yml@v1
+    secrets: inherit
+
+

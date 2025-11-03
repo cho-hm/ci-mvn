@@ -1,0 +1,16 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2025 Cho-Hyunmin
+name: dispatch ci
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  dispatch:
+    permissions:
+      contents: read
+      packages: write
+    uses: yule-test-ci/ci-to-mvn/.github/workflows/ci-mvn-orchestrator.yml@v1
+#    uses: cho-hm/ci-mvn/.github/workflows/ci-mvn-orchestrator.yml@v1
+    secrets: inherit
