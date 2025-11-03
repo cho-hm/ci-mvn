@@ -1,7 +1,7 @@
 # CI - GitHub Package Registry
 
 ## 설명
-> [README] 해당 프로젝트는 `actor` 와 `GITHUB_TOKEN`를 각각 `GPR_USER`와 `GPR_TOKEN` 이라는 이름으로 사용합니다. `publish`스크립트에서 시스템 환경변수로 이를 읽어 인증할 수 있습니다. 
+> [README] 해당 프로젝트는 `actor` 와 `GITHUB_TOKEN`를 각각 `GPR_USER`와 `GPR_TOKEN` 이라는 이름으로 전달합니다. `publish`스크립트에서 시스템 환경변수로 이를 읽어 인증할 수 있습니다. 
 
 본 `repo`는 `GitHub Package Registry`에 패키지를 배포하는 서비스 (예: 유틸리티) 의 `CI`를 위해 작성된 코드 저장소입니다.\
 `publishing` 아닌, `GHCR`에 배포 및 의존성 추가로 사용되는 서비스 (예: 애플리케이션) 라면, 
