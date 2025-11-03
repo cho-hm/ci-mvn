@@ -1,12 +1,15 @@
 # CI - GitHub Package Registry
 
 ## 설명
+> [README] 해당 프로젝트는 `actor` 와 `GITHUB_TOKEN`를 각각 `GPR_USER`와 `GPR_TOKEN` 이라는 이름으로 사용합니다. `publish`스크립트에서 시스템 환경변수로 이를 읽어 인증할 수 있습니다. 
+
 본 `repo`는 `GitHub Package Registry`에 패키지를 배포하는 서비스 (예: 유틸리티) 의 `CI`를 위해 작성된 코드 저장소입니다.\
 `publishing` 아닌, `GHCR`에 배포 및 의존성 추가로 사용되는 서비스 (예: 애플리케이션) 라면, 
 <a href="https://github.com/cho-hm/ci-ghcr">해당 저장소</a>의 코드를 사용해주세요.
 > 기본적으로는 `GitHub Package Registry`의 배포를 기준으로 하지만, `gradle/maven`스크립트를 사용한 어떤 배포도 문제 없습니다.
 
-> [WARN] 해당 프로젝트는 `gradle/maven`등 스크립트 파일에 이미 배포를 위한 설정이 완료된 상태를 가정합니다.
+> [WARN] 해당 프로젝트는 `gradle/maven`등 스크립트 파일에 이미 배포를 위한 설정이 완료된 상태를 가정합니다.<br/>
+
 
 ## 프로젝트 포함하기
 본 `ci` 프로젝트는 `submodule`<sup>(1)</sup>로 사용하거나, `source code`<sup>(2)</sup>를 직접 다운로드(혹은 복사)하여 사용할 수 있습니다. (`fork` 여부는 자유입니다.)\
