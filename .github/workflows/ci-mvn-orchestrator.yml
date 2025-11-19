@@ -30,7 +30,7 @@ jobs:
   dispatch-to-checker:
     name: dispatch to checker
     needs: parse
-    uses: cho-hm/ci-mvn/.github/workflows/ci-mvn-checker.yml@v1
+    uses: ./.github/workflows/ci-mvn-checker.yml
     with:
       # checker에서 필요한 프로퍼티들.
       TRIGGER_TYPE: ${{ needs.parse.outputs.TRIGGER_TYPE }}
@@ -45,7 +45,7 @@ jobs:
     name: dispatch to builder
     needs: [ parse, dispatch-to-checker ]
     if: ${{ needs.dispatch-to-checker.result == 'success' && needs.dispatch-to-checker.outputs.CONTINUE == 'true' }}
-    uses: cho-hm/ci-mvn/.github/workflows/ci-mvn-publisher.yml@v1
+    uses: ./.github/workflows/ci-mvn-publisher.yml
     secrets: inherit
 
 
