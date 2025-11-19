@@ -171,6 +171,10 @@ gpg.repo.branch=master
 
 
 ### 그 외
+#### `TOKEN`
+특정 권한이 추가적으로 부여된 토큰이 필요할 수 있습니다. 예를 들어, `publish`를 수행할 때 다른 `private repo`에 배포된 `GPR`의 접근 권한이 필요할 수 있습니다.
+이 경우, `GITHUB`의 `secrets`에 `PAT` 라는 이름으로 토큰을 등록한 경우, `publish`시 해당 토큰을 우선 사용 합니다.
+> `Secrets and variables` - `Actions` - `Secrets` 에서 등록 할 수 있습니다. (`repo / organization` 단위로 설정 할 수 있습니다.)  
 #### `ci-mvn.properties`
 `ci-mvn.properties` 파일은 해당 `repository`에 포함되지 않습니다. 기본값 외 직접 설정해야 할 값이 존재한다면, ___프로젝트 루트___ 에 `ci-mvn.properties` 파일을 생성하여 작성합니다.
 
